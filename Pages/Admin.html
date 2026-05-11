@@ -452,7 +452,7 @@
         const username = document.getElementById('username').value;
         const password = document.getElementById('password').value;
         try {
-            const res = await fetch('http://localhost:3000/api/login', {
+            const res = await fetch('/api/login', {
                 method: 'POST', headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ username, password })
             });
@@ -513,7 +513,7 @@
     // Load Students
     async function loadStudents() {
         try {
-            const res = await fetch('http://localhost:3000/api/students', {
+            const res = await fetch('/api/students', {
                 headers: { 'Authorization': `Bearer ${localStorage.getItem('adminToken')}` }
             });
             const data = await res.json();
@@ -582,7 +582,7 @@
             password: document.getElementById('es_password').value
         };
         try {
-            const res = await fetch(`http://localhost:3000/api/students/${id}`, {
+            const res = await fetch(`/api/students/${id}`, {
                 method: 'PUT',
                 headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${localStorage.getItem('adminToken')}` },
                 body: JSON.stringify(payload)
@@ -601,7 +601,7 @@
     async function deleteStudent(id) {
         if (!confirm("Haqiqatan ham bu o'quvchini tizimdan o'chirib tashlamoqchimisiz? (Bu uning barcha guruhlaridagi ishtirokini ham o'chiradi)")) return;
         try {
-            const res = await fetch(`http://localhost:3000/api/students/${id}`, {
+            const res = await fetch(`/api/students/${id}`, {
                 method: 'DELETE',
                 headers: { 'Authorization': `Bearer ${localStorage.getItem('adminToken')}` }
             });
@@ -617,7 +617,7 @@
     // Load & Add Teachers
     async function loadTeachers() {
         try {
-            const res = await fetch('http://localhost:3000/api/teachers', {
+            const res = await fetch('/api/teachers', {
                 headers: { 'Authorization': `Bearer ${localStorage.getItem('adminToken')}` }
             });
             const data = await res.json();
@@ -656,7 +656,7 @@
             password: document.getElementById('t_password').value
         };
         const method = id ? 'PUT' : 'POST';
-        const url = id ? `http://localhost:3000/api/teachers/${id}` : 'http://localhost:3000/api/teachers';
+        const url = id ? `/api/teachers/${id}` : '/api/teachers';
         try {
             const res = await fetch(url, {
                 method: method,
@@ -703,7 +703,7 @@
     async function deleteTeacher(id) {
         if (!confirm("Haqiqatan ham bu o'qituvchini o'chirmoqchimisiz?")) return;
         try {
-            const res = await fetch(`http://localhost:3000/api/teachers/${id}`, {
+            const res = await fetch(`/api/teachers/${id}`, {
                 method: 'DELETE',
                 headers: { 'Authorization': `Bearer ${localStorage.getItem('adminToken')}` }
             });
@@ -719,7 +719,7 @@
     // Load & Add Admins
     async function loadAdmins() {
         try {
-            const res = await fetch('http://localhost:3000/api/admins', {
+            const res = await fetch('/api/admins', {
                 headers: { 'Authorization': `Bearer ${localStorage.getItem('adminToken')}` }
             });
             const data = await res.json();
@@ -747,7 +747,7 @@
             password: document.getElementById('a_password').value
         };
         try {
-            const res = await fetch('http://localhost:3000/api/admins', {
+            const res = await fetch('/api/admins', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${localStorage.getItem('adminToken')}` },
                 body: JSON.stringify(payload)
@@ -769,7 +769,7 @@
     async function deleteAdmin(id) {
         if (!confirm("Haqiqatan ham bu adminni o'chirmoqchimisiz?")) return;
         try {
-            const res = await fetch(`http://localhost:3000/api/admins/${id}`, {
+            const res = await fetch(`/api/admins/${id}`, {
                 method: 'DELETE',
                 headers: { 'Authorization': `Bearer ${localStorage.getItem('adminToken')}` }
             });
@@ -786,7 +786,7 @@
     let allClubs = [];
     async function loadClubs() {
         try {
-            const res = await fetch('http://localhost:3000/api/clubs', {
+            const res = await fetch('/api/clubs', {
                 headers: { 'Authorization': `Bearer ${localStorage.getItem('adminToken')}` }
             });
             const data = await res.json();
@@ -818,7 +818,7 @@
         formData.append('description', document.getElementById('c_description').value);
         const imageFile = document.getElementById('c_image').files[0];
         if (imageFile) formData.append('image', imageFile);
-        const url = id ? `http://localhost:3000/api/clubs/${id}` : 'http://localhost:3000/api/clubs';
+        const url = id ? `/api/clubs/${id}` : '/api/clubs';
         const method = id ? 'PUT' : 'POST';
         try {
             const res = await fetch(url, {
@@ -858,7 +858,7 @@
     async function deleteClub(id) {
         if (!confirm("Haqiqatan ham bu to'garakni o'chirmoqchimisiz?")) return;
         try {
-            const res = await fetch(`http://localhost:3000/api/clubs/${id}`, {
+            const res = await fetch(`/api/clubs/${id}`, {
                 method: 'DELETE',
                 headers: { 'Authorization': `Bearer ${localStorage.getItem('adminToken')}` }
             });
@@ -874,7 +874,7 @@
     // Load & Manage Groups
     async function loadGroups() {
         try {
-            const res = await fetch('http://localhost:3000/api/groups', {
+            const res = await fetch('/api/groups', {
                 headers: { 'Authorization': `Bearer ${localStorage.getItem('adminToken')}` }
             });
             const data = await res.json();
@@ -896,7 +896,7 @@
 
     async function loadClubsForSelect() {
         try {
-            const res = await fetch('http://localhost:3000/api/clubs');
+            const res = await fetch('/api/clubs');
             const data = await res.json();
             if (data.success) {
                 document.getElementById('g_club').innerHTML = `<option value="">To'garakni tanlang</option>` + 
@@ -907,7 +907,7 @@
 
     async function loadTeachersForGroups() {
         try {
-            const res = await fetch('http://localhost:3000/api/teachers', {
+            const res = await fetch('/api/teachers', {
                 headers: { 'Authorization': `Bearer ${localStorage.getItem('adminToken')}` }
             });
             const data = await res.json();
@@ -927,7 +927,7 @@
             schedule: document.getElementById('g_schedule').value
         };
         try {
-            const res = await fetch('http://localhost:3000/api/groups', {
+            const res = await fetch('/api/groups', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${localStorage.getItem('adminToken')}` },
                 body: JSON.stringify(payload)
@@ -945,7 +945,7 @@
     async function deleteGroup(id) {
         if (!confirm("Haqiqatan ham bu guruhni o'chirmoqchimisiz?")) return;
         try {
-            const res = await fetch(`http://localhost:3000/api/groups/${id}`, {
+            const res = await fetch(`/api/groups/${id}`, {
                 method: 'DELETE',
                 headers: { 'Authorization': `Bearer ${localStorage.getItem('adminToken')}` }
             });
@@ -971,7 +971,7 @@
         if (!studentId || !groupId) return alert("O'quvchini tanlang!");
         
         try {
-            const res = await fetch(`http://localhost:3000/api/groups/${groupId}/students`, {
+            const res = await fetch(`/api/groups/${groupId}/students`, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${localStorage.getItem('adminToken')}` },
                 body: JSON.stringify({ student_id: studentId })

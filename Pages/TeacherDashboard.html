@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="uz" class="dark">
 <head>
     <meta charset="UTF-8">
@@ -190,7 +190,7 @@
         document.getElementById('loginForm').addEventListener('submit', async (e) => {
             e.preventDefault();
             try {
-                const res = await fetch('http://localhost:3000/api/login', {
+                const res = await fetch('/api/login', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({ 
@@ -223,7 +223,7 @@
 
         async function loadGroups() {
             try {
-                const res = await fetch('http://localhost:3000/api/teacher/groups', {
+                const res = await fetch('/api/teacher/groups', {
                     headers: { 'Authorization': `Bearer ${localStorage.getItem('teacherToken')}` }
                 });
                 const data = await res.json();
@@ -262,7 +262,7 @@
             };
 
             try {
-                const res = await fetch(`http://localhost:3000/api/groups/${groupId}/lessons`, {
+                const res = await fetch(`/api/groups/${groupId}/lessons`, {
                     headers: { 'Authorization': `Bearer ${localStorage.getItem('teacherToken')}` }
                 });
                 const data = await res.json();
@@ -307,7 +307,7 @@
         document.getElementById('lessonForm').addEventListener('submit', async (e) => {
             e.preventDefault();
             try {
-                const res = await fetch('http://localhost:3000/api/teacher/lessons', {
+                const res = await fetch('/api/teacher/lessons', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${localStorage.getItem('teacherToken')}` },
                     body: JSON.stringify({
@@ -341,7 +341,7 @@
             }
 
             try {
-                const res = await fetch('http://localhost:3000/api/teacher/assignments', {
+                const res = await fetch('/api/teacher/assignments', {
                     method: 'POST',
                     headers: { 'Authorization': `Bearer ${localStorage.getItem('teacherToken')}` },
                     body: formData
