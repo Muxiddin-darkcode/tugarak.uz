@@ -113,7 +113,14 @@ const db = new sqlite3.Database(dbPath, (err) => {
 const teachersDbPath = path.join(dataDir, 'teachers.db');
 const teachersDb = new sqlite3.Database(teachersDbPath, (err) => {
     if (err) console.error('Teachers DB error', err);
-    else console.log('Connected to teachers.db');
+    else {
+        console.log('Connected to teachers.db');
+        teachersDb.run(`CREATE TABLE IF NOT EXISTS teachers (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            ism TEXT, familiya TEXT, telefon TEXT, fan TEXT,
+            username TEXT UNIQUE, password TEXT NOT NULL
+        )`);
+    }
 });
 
 // Auth Middleware
