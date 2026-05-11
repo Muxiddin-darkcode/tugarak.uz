@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="uz" class="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tugarak.uz</title>
+    <link rel="stylesheet" href="main.css">
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #121212; /* Dark main background */
+        }
+        .header-bg {
+            background-color: #0d1520; /* Dark navy for header/sidebar look */
+        }
+    </style>
+</head>
+<body class="text-gray-300 antialiased selection:bg-blue-500/30 selection:text-blue-200">
+
+<div class="flex h-screen overflow-hidden bg-[#121212] relative">
+    <!-- Floating Background Elements -->
+    <div class="absolute top-20 left-1/4 w-64 h-64 bg-blue-600/10 rounded-full blur-3xl animate-float pointer-events-none"></div>
+    <div class="absolute bottom-20 right-1/4 w-96 h-96 bg-purple-600/10 rounded-full blur-3xl animate-float pointer-events-none" style="animation-delay: 2s;"></div>
+    
+    <!-- Sidebar (Desktop) -->
+    <aside class="w-64 header-bg border-r border-gray-800 flex-col hidden md:flex z-20 shrink-0">
+        <!-- Brand -->
+        <div class="p-6 border-b border-gray-800">
+            <div class="brand flex items-center gap-3 cursor-pointer group">
+                <img src="logo.png" alt="GDPI" class="w-12 h-12 object-contain bg-white rounded-full p-1 shadow-lg shadow-blue-900/30 shrink-0 group-hover:scale-105 transition-transform">
+                <span class="text-xl font-bold text-white tracking-tight">GDPI To'garak</span>
+            </div>
+        </div>
+
+        <!-- Navigation -->
+        <nav class="flex-1 overflow-y-auto py-6 px-4">
+            <span class="text-xs font-semibold text-gray-500 uppercase tracking-wider mb-4 block px-4">Asosiy menyu</span>
+            <ul class="space-y-2">
+                <li class="animate-slide-up delay-100">
+                    <a href="#" class="flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-medium bg-blue-600/10 text-blue-400 border border-blue-500/20 group">
+                        <svg class="w-5 h-5 group-hover:rotate-12 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"></path></svg>
+                        Bosh sahifa
+                    </a>
+                </li>
+                <li class="animate-slide-up delay-200">
+                    <a href="Pages/Tugaraklar.html" class="flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-medium text-gray-400 hover:text-white hover:bg-gray-800/50 transition-colors group">
+                        <svg class="w-5 h-5 text-gray-500 group-hover:text-blue-400 group-hover:-translate-y-1 transition-all duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg>
+                        To'garaklar
+                    </a>
+                </li>
+                <li class="animate-slide-up delay-300">
+                    <a href="Pages/Admin.html" class="flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-medium text-gray-400 hover:text-white hover:bg-gray-800/50 transition-colors group">
+                        <svg class="w-5 h-5 text-gray-500 group-hover:text-purple-400 group-hover:rotate-180 transition-all duration-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"></path></svg>
+                        Admin Panel
+                    </a>
+                </li>
+                <li class="animate-slide-up delay-400">
+                    <a href="#" class="flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-medium text-gray-400 hover:text-white hover:bg-gray-800/50 transition-colors group">
+                        <svg class="w-5 h-5 text-gray-500 group-hover:text-blue-400 group-hover:scale-110 transition-all duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"></path></svg>
+                        Fanlar
+                    </a>
+                </li>
+                <li class="animate-slide-up delay-500">
+                    <a href="#" class="flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-medium text-gray-400 hover:text-white hover:bg-gray-800/50 transition-colors group">
+                        <svg class="w-5 h-5 text-gray-500 group-hover:text-blue-400 group-hover:-rotate-12 transition-all duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                        Biz haqimizda
+                    </a>
+                </li>
+            </ul>
+        </nav>
+
+        <!-- Auth -->
+        <div class="p-6 border-t border-gray-800 space-y-3">
+            <button onclick="document.getElementById('loginSelectModal').classList.remove('hidden')" class="block w-full text-center text-sm font-medium text-gray-300 hover:text-white px-4 py-3 rounded-xl hover:bg-gray-800 transition-all hover:scale-105">Kirish</button>
+            <a href="Pages/Register.html" class="block w-full text-center text-sm font-medium bg-blue-600 text-white px-4 py-3 rounded-xl hover:bg-blue-500 transition-all shadow-md shadow-blue-900/50 hover:scale-105 btn-glow">Ro'yxatdan o'tish</a>
+        </div>
+    </aside>
+
+    <!-- Main Content Wrapper -->
+    <div class="flex-1 flex flex-col overflow-hidden relative">
+        
+        <!-- Weather Widget Container -->
+        <div id="weather-widget" class="absolute top-6 right-6 z-50 hidden md:block"></div>
+
+        <!-- Mobile Header -->
+        <header class="md:hidden header-bg border-b border-gray-800 sticky top-0 z-30 shrink-0">
+            <div class="px-6 py-4 flex justify-between items-center">
+                <div class="brand flex items-center gap-3">
+                    <img src="logo.png" alt="GDPI" class="w-9 h-9 object-contain bg-white rounded-full p-0.5 shadow-sm">
+                    <span class="text-lg font-bold text-white">GDPI To'garak</span>
+                </div>
+                <button class="text-gray-400 hover:text-white focus:outline-none">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path></svg>
+                </button>
+            </div>
+        </header>
+
+        <!-- Main Scrollable Area -->
+        <main class="flex-1 overflow-y-auto">
+            <!-- Hero Section -->
+            <section class="hero relative header-bg text-white py-16 md:py-24 overflow-hidden border-b border-gray-800">
+                <div class="container mx-auto px-6 lg:px-12 relative z-10">
+                    <span class="inline-block py-1.5 px-4 rounded-full bg-blue-500/10 border border-blue-500/20 text-blue-400 text-xs font-semibold uppercase tracking-wider mb-6 animate-slide-up">
+                        Yangi o'quv mavsumi ochiq
+                    </span>
+                    <h1 class="text-4xl md:text-5xl lg:text-6xl font-bold mb-6 leading-tight tracking-tight text-white max-w-4xl animate-slide-up delay-100">
+                        Gulistondagi eng katta <br class="hidden md:block" /> 
+                        <span class="text-blue-500">ta'lim va to'garaklar platformasi</span>
+                    </h1>
+                    <p class="text-lg text-gray-400 mb-10 max-w-2xl font-light leading-relaxed animate-slide-up delay-200">
+                        Matematika, informatika, xorijiy tillar va turli xil fan to'garaklarini bitta joyda toping. O'zingizga qulay vaqt va joyni tanlang.
+                    </p>
+                    
+                    <div class="search-bar flex flex-col md:flex-row max-w-3xl bg-[#1a2234] border border-gray-700 rounded-xl p-1.5 shadow-2xl gap-2 md:gap-0 animate-slide-up delay-300">
+                        <div class="flex-1 flex items-center px-4">
+                            <svg class="w-5 h-5 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
+                            <input type="text" placeholder="Fan yoki to'garak nomini qidiring..." class="w-full bg-transparent px-3 py-3 text-gray-200 placeholder-gray-500 focus:outline-none md:text-base">
+                        </div>
+                        <button class="bg-blue-600 text-white px-8 py-3 rounded-lg font-medium hover:bg-blue-500 transition-colors w-full md:w-auto hover:scale-105 btn-glow">Qidirish</button>
+                    </div>
+
+                    <div class="mt-12 flex items-center gap-8 text-sm text-gray-400 font-medium">
+                        <div class="flex items-center gap-2">
+                            <div class="w-2 h-2 rounded-full bg-green-500 shadow-[0_0_8px_rgba(34,197,94,0.6)]"></div>
+                            <span id="stat-clubs" class="font-bold text-white">--</span> To'garaklar
+                        </div>
+                        <div class="flex items-center gap-2">
+                            <div class="w-2 h-2 rounded-full bg-blue-500 shadow-[0_0_8px_rgba(59,130,246,0.6)]"></div>
+                            <span id="stat-students" class="font-bold text-white">--</span> O'quvchi
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Courses Section -->
+            <section class="featured-events container mx-auto px-6 lg:px-12 py-16">
+                <div class="flex justify-between items-end mb-8 border-b border-gray-800 pb-4">
+                    <div>
+                        <h2 class="text-2xl md:text-3xl font-bold text-white">Tavsiya etilgan to'garaklar</h2>
+                    </div>
+                    <a href="./Pages/Tugaraklar.html" class="hidden md:inline-flex items-center gap-2 text-sm text-blue-500 font-medium hover:text-blue-400 group">
+                        Barchasini ko'rish
+                        <svg class="w-4 h-4 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
+                    </a>
+                </div>
+
+                <div id="featuredClubsGrid" class="events-grid grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+                    <!-- Dynamic clubs will be loaded here -->
+                </div>
+            </section>
+            
+            <!-- Call to Action Section -->
+            <section class="py-12 border-t border-gray-800">
+                <div class="container mx-auto px-6 lg:px-12">
+                    <div class="bg-gradient-to-r from-blue-900 to-[#0d1b2a] rounded-2xl p-8 md:p-10 flex flex-col md:flex-row items-center justify-between text-white border border-blue-800/50 shadow-2xl relative overflow-hidden">
+                        <div class="absolute top-0 right-0 w-64 h-64 bg-blue-500/10 rounded-full blur-3xl"></div>
+                        <div class="relative z-10 mb-6 md:mb-0">
+                            <h2 class="text-2xl font-bold mb-2">O'qituvchimisiz?</h2>
+                            <p class="text-blue-200 text-sm">O'z to'garaklaringizni platformaga qo'shing va yangi talabalarni jalb qiling.</p>
+                        </div>
+                        <a href="Pages/Register.html" class="relative z-10 shrink-0 inline-block bg-blue-600 text-white font-medium px-8 py-3 rounded-lg shadow-lg hover:bg-blue-500 transition-colors">Ro'yxatdan o'tish</a>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Footer -->
+            <footer class="header-bg border-t border-gray-800 py-10 mt-auto">
+                <div class="container mx-auto px-6 lg:px-12">
+                    <div class="flex flex-col md:flex-row justify-between items-center gap-4 text-xs text-gray-500">
+                        <p>&copy; 2026 Tugarak.uz. Barcha huquqlar himoyalangan.</p>
+                        <div class="flex gap-4">
+                            <a href="#" class="hover:text-white transition-colors">Telegram</a>
+                            <a href="#" class="hover:text-white transition-colors">Instagram</a>
+                            <a href="#" class="hover:text-white transition-colors">Facebook</a>
+                        </div>
+                    </div>
+                </div>
+            </footer>
+        </main>
+        </main>
+    </div>
+</div>
+
+<!-- Login Select Modal -->
+<div id="loginSelectModal" class="hidden fixed inset-0 bg-black/80 z-50 flex items-center justify-center p-4 backdrop-blur-sm animate-fade-in">
+    <div class="bg-[#1a2234] border border-gray-800 rounded-2xl p-8 w-full max-w-md shadow-2xl relative text-center animate-scale-in">
+        <button onclick="document.getElementById('loginSelectModal').classList.add('hidden')" class="absolute top-4 right-4 text-gray-400 hover:text-white transition-colors hover:rotate-90 transform duration-300">
+            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+        </button>
+        <div class="mb-6 flex justify-center">
+            <div class="w-16 h-16 bg-blue-500/10 rounded-full flex items-center justify-center text-blue-400">
+                <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 16l-4-4m0 0l4-4m-4 4h14m-5 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h7a3 3 0 013 3v1"></path></svg>
+            </div>
+        </div>
+        <h3 class="text-2xl font-bold text-white mb-2">Tizimga kirish</h3>
+        <p class="text-gray-400 mb-8 text-sm">Kim sifatida tizimga kirmoqchisiz?</p>
+        
+        <div class="space-y-4">
+            <a href="Pages/TeacherDashboard.html" class="flex items-center gap-4 w-full bg-[#0d1520] hover:bg-gray-800 border border-gray-700 hover:border-blue-500 text-white p-4 rounded-xl transition-all group">
+                <div class="bg-blue-500/20 text-blue-400 p-3 rounded-lg group-hover:scale-110 transition-transform">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2 2v2m4 6h.01M5 20h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path></svg>
+                </div>
+                <div class="text-left">
+                    <span class="block font-bold text-lg">O'qituvchi</span>
+                    <span class="block text-xs text-gray-400">To'garak o'qituvchilari uchun</span>
+                </div>
+            </a>
+            
+            <a href="Pages/StudentDashboard.html" class="flex items-center gap-4 w-full bg-[#0d1520] hover:bg-gray-800 border border-gray-700 hover:border-purple-500 text-white p-4 rounded-xl transition-all group">
+                <div class="bg-purple-500/20 text-purple-400 p-3 rounded-lg group-hover:scale-110 transition-transform">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 14l9-5-9-5-9 5 9 5z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 14l6.16-3.422a12.083 12.083 0 01.665 6.479A11.952 11.952 0 0012 20.055a11.952 11.952 0 00-6.824-2.998 12.078 12.078 0 01.665-6.479L12 14z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 14l9-5-9-5-9 5 9 5zm0 0l6.16-3.422a12.083 12.083 0 01.665 6.479A11.952 11.952 0 0012 20.055a11.952 11.952 0 00-6.824-2.998 12.078 12.078 0 01.665-6.479L12 14zm-4 6v-7.5l4-2.222"></path></svg>
+                </div>
+                <div class="text-left">
+                    <span class="block font-bold text-lg">O'quvchi / Talaba</span>
+                    <span class="block text-xs text-gray-400">To'garak o'quvchilari uchun</span>
+                </div>
+            </a>
+        </div>
+    </div>
+</div>
+
+<!-- Search Filter Script -->
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const searchInput = document.querySelector('input[placeholder*="qidiring"]');
+        
+        function filterCards() {
+            if(!searchInput) return;
+            const term = searchInput.value.toLowerCase().trim();
+            const cards = document.querySelectorAll('.courses-grid > div, .events-grid > div');
+            
+            cards.forEach(card => {
+                const text = card.textContent.toLowerCase();
+                if (text.includes(term)) {
+                    card.style.display = '';
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+        }
+
+        if (searchInput) {
+            searchInput.addEventListener('input', filterCards);
+        }
+
+        // Fetch Clubs
+        async function fetchFeaturedClubs() {
+            try {
+                const res = await fetch('http://localhost:3000/api/clubs');
+                const data = await res.json();
+                if (data.success) {
+                    const grid = document.getElementById('featuredClubsGrid');
+                    // show max 4
+                    const featured = data.data.slice(0, 4);
+                    grid.innerHTML = featured.map((c, index) => `
+                        <div class="event-card bg-[#1a2234] rounded-xl border border-gray-800 overflow-hidden hover:border-blue-500/50 transition-all duration-300 group flex flex-col animate-slide-up" style="animation-delay: ${index * 100}ms">
+                            <div class="relative h-48 overflow-hidden bg-gray-900">
+                                <img src="${c.imagePath}" alt="${c.title}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 opacity-80 group-hover:opacity-100">
+                                <div class="absolute top-3 left-3 bg-black/60 backdrop-blur-md text-white text-[10px] font-bold px-2.5 py-1 rounded-md uppercase tracking-wider border border-white/10">
+                                    ${c.title}
+                                </div>
+                            </div>
+                            <div class="p-5 flex-1 flex flex-col">
+                                <div class="flex justify-between items-start mb-2">
+                                    <h3 class="text-lg font-bold text-white line-clamp-2 group-hover:text-blue-400 transition-colors">${c.title}</h3>
+                                </div>
+                                <div class="space-y-2 mb-6 flex-1 mt-2">
+                                    <p class="text-sm text-gray-400 flex items-center gap-2">
+                                        <svg class="w-4 h-4 text-gray-500 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path></svg>
+                                        ${c.paragraph || ''}
+                                    </p>
+                                    <p class="text-sm text-gray-400 flex items-center gap-2">
+                                        <svg class="w-4 h-4 text-gray-500 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                                        ${c.description || ''}
+                                    </p>
+                                    ${c.teacher_name ? `
+                                    <p class="text-sm text-gray-400 flex items-center gap-2 mt-2 text-blue-400 font-medium">
+                                        👨‍🏫 O'qituvchi: ${c.teacher_name}
+                                    </p>` : ''}
+                                </div>
+                                <a href="Pages/Register.html" class="event-link block text-center w-full bg-blue-600/10 text-blue-400 text-sm font-medium py-2.5 rounded-lg hover:bg-blue-600 hover:text-white transition-colors border border-blue-500/20 hover:border-blue-600">
+                                    Ro'yxatdan o'tish
+                                </a>
+                            </div>
+                        </div>
+                    `).join('');
+                }
+            } catch (err) {
+                console.error("Error fetching clubs:", err);
+            }
+        }
+        
+        async function fetchStats() {
+            try {
+                const res = await fetch('http://localhost:3000/api/stats');
+                const data = await res.json();
+                if (data.success) {
+                    document.getElementById('stat-clubs').textContent = data.data.clubs;
+                    document.getElementById('stat-students').textContent = data.data.students;
+                }
+            } catch (err) {
+                console.error("Error fetching stats:", err);
+            }
+        }
+
+        fetchFeaturedClubs();
+        fetchStats();
+    });
+</script>
+
+<!-- Dynamic Weather 3D Background Scripts -->
+<script src="https://cdn.jsdelivr.net/npm/tsparticles@2/tsparticles.bundle.min.js"></script>
+<script src="JS/weather-bg.js"></script>
+
+</body>
+</html>

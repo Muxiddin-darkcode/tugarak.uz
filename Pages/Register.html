@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="uz" class="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ro'yxatdan o'tish - GDPI</title>
+    <link rel="stylesheet" href="../main.css">
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
+        body { font-family: 'Inter', sans-serif; background-color: #121212; }
+        .header-bg { background-color: #0d1520; }
+        .input-field {
+            width: 100%;
+            background-color: #1a2234;
+            border: 1px solid #374151;
+            color: #fff;
+            padding: 0.75rem 1rem;
+            border-radius: 0.5rem;
+            outline: none;
+            transition: all 0.2s;
+        }
+        .input-field:focus {
+            border-color: #3b82f6;
+            box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.2);
+        }
+    </style>
+</head>
+<body class="text-gray-300 antialiased selection:bg-blue-500/30 selection:text-blue-200">
+
+<div class="flex h-screen overflow-hidden bg-[#121212]">
+    <!-- Sidebar (Desktop) -->
+    <aside class="w-64 header-bg border-r border-gray-800 flex-col hidden md:flex z-20 shrink-0">
+        <!-- Brand -->
+        <div class="p-6 border-b border-gray-800">
+            <a href="../index.html" class="brand flex items-center gap-3 cursor-pointer group">
+                <img src="../logo.png" alt="GDPI" class="w-12 h-12 object-contain bg-white rounded-full p-1 shadow-lg shadow-blue-900/30 shrink-0 group-hover:scale-105 transition-transform">
+                <span class="text-xl font-bold text-white tracking-tight">GDPI To'garak</span>
+            </a>
+        </div>
+
+        <!-- Navigation -->
+        <nav class="flex-1 overflow-y-auto py-6 px-4">
+            <span class="text-xs font-semibold text-gray-500 uppercase tracking-wider mb-4 block px-4">Asosiy menyu</span>
+            <ul class="space-y-2">
+                <li>
+                    <a href="../index.html" class="flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-medium text-gray-400 hover:text-white hover:bg-gray-800/50 transition-colors group">
+                        <svg class="w-5 h-5 text-gray-500 group-hover:text-blue-400 transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"></path></svg>
+                        Bosh sahifa
+                    </a>
+                </li>
+                <li>
+                    <a href="Tugaraklar.html" class="flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-medium text-gray-400 hover:text-white hover:bg-gray-800/50 transition-colors group">
+                        <svg class="w-5 h-5 text-gray-500 group-hover:text-blue-400 transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg>
+                        To'garaklar
+                    </a>
+                </li>
+            </ul>
+        </nav>
+    </aside>
+
+    <!-- Main Content Wrapper -->
+    <div class="flex-1 flex flex-col overflow-y-auto">
+        
+        <!-- Mobile Header -->
+        <header class="md:hidden header-bg border-b border-gray-800 sticky top-0 z-30 shrink-0">
+            <div class="px-6 py-4 flex justify-between items-center">
+                <a href="../index.html" class="brand flex items-center gap-3">
+                    <img src="../logo.png" alt="GDPI" class="w-9 h-9 object-contain bg-white rounded-full p-0.5 shadow-sm">
+                    <span class="text-lg font-bold text-white">GDPI To'garak</span>
+                </a>
+            </div>
+        </header>
+
+        <!-- Registration Form Area -->
+        <main class="flex-1 flex items-center justify-center p-6 md:p-12 relative overflow-hidden">
+            <!-- Floating Background Elements -->
+            <div class="absolute top-10 right-10 w-64 h-64 bg-blue-600/10 rounded-full blur-3xl animate-float pointer-events-none"></div>
+            <div class="absolute bottom-10 left-10 w-96 h-96 bg-purple-600/10 rounded-full blur-3xl animate-float pointer-events-none" style="animation-delay: 2s;"></div>
+
+            <div class="bg-[#0d1520] border border-gray-800 rounded-3xl shadow-2xl w-full max-w-6xl relative overflow-hidden flex flex-col lg:flex-row">
+                
+                <!-- Image Side -->
+                <div class="hidden lg:block lg:w-1/2 relative bg-[#090e17] border-r border-gray-800 p-12 flex flex-col justify-center items-center group">
+                    <div class="absolute inset-0 bg-gradient-to-t from-[#090e17] via-transparent to-transparent z-10"></div>
+                    <img src="../register_bg.png" alt="Education Platform" class="w-full h-full object-cover absolute inset-0 opacity-80 group-hover:scale-105 transition-transform duration-1000">
+                    <div class="relative z-20 text-center animate-slide-up">
+                        <h2 class="text-3xl font-bold text-white mb-4">Kelajagingizni o'z qo'lingizga oling!</h2>
+                        <p class="text-gray-400">Eng yaxshi o'qituvchilardan bilim oling va maqsadlaringizga erishing.</p>
+                    </div>
+                </div>
+
+                <!-- Form Side -->
+                <div class="lg:w-1/2 p-8 md:p-12 relative z-10 bg-[#0d1520]">
+                    <h2 class="text-3xl font-bold text-white mb-2 animate-slide-up">Ro'yxatdan O'tish</h2>
+                    <p class="text-gray-400 mb-8 animate-slide-up delay-100">O'zingizga qiziq bo'lgan to'garakka yoziling</p>
+
+                    <div id="successMsg" class="hidden bg-green-500/10 border border-green-500/50 text-green-400 p-4 rounded-xl mb-6 text-center font-medium">
+                        Tabriklaymiz! Muvaffaqiyatli ro'yxatdan o'tdingiz.
+                    </div>
+
+                    <div id="errorMsg" class="hidden bg-red-500/10 border border-red-500/50 text-red-400 p-4 rounded-xl mb-6 text-center font-medium"></div>
+
+                    <form id="registerForm" class="space-y-5">
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+                            <div>
+                                <label class="block text-sm font-medium text-gray-400 mb-1">Ism <span class="text-red-500">*</span></label>
+                                <input type="text" id="ism" required class="input-field" placeholder="Ali">
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-gray-400 mb-1">Familiya <span class="text-red-500">*</span></label>
+                                <input type="text" id="familiya" required class="input-field" placeholder="Valiyev">
+                            </div>
+                        </div>
+
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+                            <div>
+                                <label class="block text-sm font-medium text-gray-400 mb-1">Yosh</label>
+                                <input type="number" id="yosh" class="input-field" placeholder="18">
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-gray-400 mb-1">Telefon raqam <span class="text-red-500">*</span></label>
+                                <input type="tel" id="telefon" required class="input-field" placeholder="+998 90 123 45 67">
+                            </div>
+                        </div>
+
+                        <div>
+                            <label class="block text-sm font-medium text-gray-400 mb-1">O'qish joyi (Maktab yoki OTM)</label>
+                            <input type="text" id="oqish_joyi" class="input-field" placeholder="GDPI yoki 1-maktab">
+                        </div>
+
+                        <div>
+                            <label class="block text-sm font-medium text-gray-400 mb-1">Qiziqadigan to'garakni tanlang</label>
+                            <select id="tanlangan_fan" class="input-field appearance-none cursor-pointer">
+                                <option value="Matematika">Matematika</option>
+                                <option value="Informatika">Informatika va Dasturlash</option>
+                                <option value="Ingliz Tili">Ingliz Tili</option>
+                                <option value="Fizika">Fizika</option>
+                                <option value="Kimyo">Kimyo</option>
+                                <option value="Biologiya">Biologiya</option>
+                                <option value="Tarix">Tarix</option>
+                                <option value="Ona tili">Ona Tili va Adabiyot</option>
+                                <option value="Rus tili">Rus Tili</option>
+                                <option value="Pedagogika">Pedagogika va Psixologiya</option>
+                                <option value="Geografiya">Geografiya</option>      
+                                <option value="Sport">Sport (Jismoniy Tarbiya)</option>
+                                <option value="San'at">Tasviriy San'at</option>
+                                <option value="Musiqa">Musiqa</option>
+                                <option value="Robototexnika">Robototexnika</option>
+                                <option value="IT va Dizayn">IT va Dizayn</option>
+                                <option value="Notiqlik">Notiqlik San'ati</option>
+                                <option value="Boshqa">Boshqa</option>
+                            </select>
+                        </div>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-5 mt-5">
+                            <div>
+                                <label class="block text-sm font-medium text-gray-400 mb-1">Login <span class="text-red-500">*</span></label>
+                                <input type="text" id="username" required class="input-field" placeholder="student_ali">
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-gray-400 mb-1">Parol <span class="text-red-500">*</span></label>
+                                <input type="password" id="password" required class="input-field" placeholder="••••••••">
+                            </div>
+                        </div>
+
+                        <button type="submit" class="w-full bg-blue-600 text-white font-bold py-3.5 rounded-xl hover:bg-blue-500 transition-all hover:scale-[1.02] shadow-[0_0_15px_rgba(37,99,235,0.4)] mt-4 flex items-center justify-center gap-2 animate-slide-up delay-400">
+                            <span>Jo'natish</span>
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
+                        </button>
+                    </form>
+                </div>
+            </div>
+
+        </main>
+    </div>
+</div>
+
+<script>
+    document.getElementById('registerForm').addEventListener('submit', async (e) => {
+        e.preventDefault();
+        
+        const successMsg = document.getElementById('successMsg');
+        const errorMsg = document.getElementById('errorMsg');
+        successMsg.classList.add('hidden');
+        errorMsg.classList.add('hidden');
+
+        const formData = {
+            ism: document.getElementById('ism').value,
+            familiya: document.getElementById('familiya').value,
+            yosh: document.getElementById('yosh').value,
+            telefon: document.getElementById('telefon').value,
+            oqish_joyi: document.getElementById('oqish_joyi').value,
+            fan: document.getElementById('tanlangan_fan').value,
+            username: document.getElementById('username').value,
+            password: document.getElementById('password').value
+        };
+
+        try {
+            const response = await fetch('http://localhost:3000/api/register', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(formData)
+            });
+
+            const result = await response.json();
+            
+            if (result.success) {
+                successMsg.classList.remove('hidden');
+                document.getElementById('registerForm').reset();
+            } else {
+                errorMsg.textContent = result.message || "Xatolik yuz berdi.";
+                errorMsg.classList.remove('hidden');
+            }
+        } catch (error) {
+            console.error("Error:", error);
+            errorMsg.textContent = "Server bilan ulanishda xatolik. Iltimos keyinroq urinib ko'ring.";
+            errorMsg.classList.remove('hidden');
+        }
+    });
+</script>
+
+<!-- Dynamic Weather 3D Background Scripts -->
+<script src="https://cdn.jsdelivr.net/npm/tsparticles@2/tsparticles.bundle.min.js"></script>
+<script src="../JS/weather-bg.js"></script>
+
+</body>
+</html>

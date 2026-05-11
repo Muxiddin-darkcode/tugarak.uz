@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html lang="uz" class="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>O'quvchi Kabineti - Tugarak.uz</title>
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #0f172a;
+        }
+        .glass {
+            background: rgba(30, 41, 59, 0.7);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+    </style>
+</head>
+<body class="text-gray-200 antialiased h-screen flex overflow-hidden selection:bg-green-500/30">
+
+    <!-- Login Section -->
+    <div id="loginSection" class="fixed inset-0 z-50 flex items-center justify-center bg-[#0f172a] p-4">
+        <div class="glass rounded-2xl p-8 w-full max-w-md shadow-2xl relative overflow-hidden">
+            <div class="absolute top-0 left-0 w-32 h-32 bg-green-500/20 rounded-full blur-3xl"></div>
+            <div class="absolute bottom-0 right-0 w-32 h-32 bg-blue-500/20 rounded-full blur-3xl"></div>
+            
+            <div class="relative z-10">
+                <div class="flex justify-center mb-6">
+                    <div class="w-16 h-16 bg-gradient-to-tr from-green-500 to-blue-600 rounded-2xl flex items-center justify-center -rotate-3 shadow-lg">
+                        <svg class="w-8 h-8 text-white rotate-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 14l9-5-9-5-9 5 9 5z"></path></svg>
+                    </div>
+                </div>
+                <h2 class="text-2xl font-bold text-center text-white mb-2">O'quvchi Kabineti</h2>
+                <p class="text-center text-gray-400 text-sm mb-8">Darslarga kirish uchun loginingizni kiriting</p>
+
+                <div id="loginError" class="hidden text-red-400 bg-red-500/10 border border-red-500/20 p-3 rounded-lg text-sm mb-4 text-center">Xatolik yuz berdi</div>
+
+                <form id="loginForm" class="space-y-5">
+                    <div>
+                        <label class="block text-sm text-gray-400 mb-1.5">Login</label>
+                        <input type="text" id="username" class="w-full bg-slate-800/50 border border-slate-700 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-green-500" required>
+                    </div>
+                    <div>
+                        <label class="block text-sm text-gray-400 mb-1.5">Parol</label>
+                        <input type="password" id="password" class="w-full bg-slate-800/50 border border-slate-700 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-green-500" required>
+                    </div>
+                    <button type="submit" class="w-full bg-gradient-to-r from-green-500 to-blue-600 text-white font-medium py-3 rounded-xl transition-all mt-2">Tizimga Kirish</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Dashboard Layout -->
+    <div id="dashboardSection" class="hidden w-full h-full flex">
+        <!-- Sidebar -->
+        <aside class="w-64 glass border-r border-slate-700/50 flex flex-col hidden md:flex">
+            <div class="p-6 flex items-center gap-3">
+                <div class="w-10 h-10 bg-gradient-to-tr from-green-500 to-blue-600 rounded-xl flex items-center justify-center">
+                    <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 14l9-5-9-5-9 5 9 5z"></path></svg>
+                </div>
+                <span class="text-xl font-bold text-white tracking-wide">Tugarak</span>
+            </div>
+
+            <nav class="flex-1 px-4 py-4 space-y-1">
+                <a href="#" class="flex items-center gap-3 px-4 py-3 bg-green-600/10 text-green-400 rounded-xl font-medium transition-colors">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zM14 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z"></path></svg>
+                    Mening Guruhlarim
+                </a>
+            </nav>
+
+            <div class="p-4 border-t border-slate-700/50">
+                <button id="logoutBtn" class="flex items-center gap-3 px-4 py-3 w-full text-red-400 hover:bg-red-500/10 rounded-xl font-medium transition-colors">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"></path></svg>
+                    Tizimdan chiqish
+                </button>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="flex-1 flex flex-col h-full overflow-hidden relative">
+            <header class="h-20 glass border-b border-slate-700/50 flex items-center justify-between px-8 z-10">
+                <h1 class="text-2xl font-bold text-white" id="pageTitle">Guruhlarim</h1>
+                
+                <div class="flex items-center gap-4">
+                    <div class="flex items-center gap-3 pl-4 border-l border-slate-700">
+                        <div class="w-10 h-10 rounded-full bg-gradient-to-tr from-green-500 to-emerald-500 border-2 border-slate-800"></div>
+                        <div class="hidden sm:block">
+                            <p id="userNameDisplay" class="text-sm font-bold text-white">O'quvchi</p>
+                            <p class="text-xs text-green-400">Student Panel</p>
+                        </div>
+                    </div>
+                </div>
+            </header>
+
+            <div class="flex-1 overflow-y-auto p-8 z-0 relative">
+                <div class="absolute top-0 right-0 w-[500px] h-[500px] bg-green-500/5 rounded-full blur-[100px] -z-10 pointer-events-none"></div>
+
+                <!-- Groups Section -->
+                <div id="groupsSection">
+                    <div id="groupsList" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                        <!-- Loading or empty text -->
+                    </div>
+                </div>
+
+                <!-- Lessons Section -->
+                <div id="lessonsSection" class="hidden">
+                    <button onclick="showGroups()" class="mb-4 text-green-400 hover:text-white flex items-center gap-2 transition-colors">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path></svg>
+                        Ortga
+                    </button>
+                    <h2 class="text-xl font-bold text-white mb-6" id="lessonsTitle">Darslar</h2>
+                    <div id="lessonsList" class="space-y-6"></div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Submit Assignment Modal -->
+    <div id="submitModal" class="fixed inset-0 z-50 hidden flex items-center justify-center bg-black/60 backdrop-blur-sm p-4">
+        <div class="glass rounded-2xl p-6 w-full max-w-md relative">
+            <h3 class="text-lg font-bold text-white mb-4">Vazifani yuborish</h3>
+            <form id="submitForm" class="space-y-4">
+                <input type="hidden" id="s_assignment_id">
+                <div>
+                    <label class="block text-sm text-gray-400 mb-1">Javob faylini yuklang (PDF, DOC, Rasm)</label>
+                    <input type="file" id="s_file" required class="w-full text-sm text-gray-400 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-medium file:bg-green-500/10 file:text-green-400 hover:file:bg-green-500/20">
+                </div>
+                <div class="flex gap-3 mt-6">
+                    <button type="button" onclick="document.getElementById('submitModal').classList.add('hidden')" class="flex-1 bg-slate-800 text-white font-medium py-3 rounded-xl hover:bg-slate-700 transition-colors">Bekor qilish</button>
+                    <button type="submit" class="flex-1 bg-green-600 text-white font-medium py-3 rounded-xl hover:bg-green-500 transition-colors">Yuborish</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        const loginSection = document.getElementById('loginSection');
+        const dashboardSection = document.getElementById('dashboardSection');
+        
+        if (localStorage.getItem('studentToken') && localStorage.getItem('studentRole') === 'student') {
+            loginSection.classList.add('hidden');
+            dashboardSection.classList.remove('hidden');
+            document.getElementById('userNameDisplay').textContent = localStorage.getItem('studentUsername') || 'O\'quvchi';
+            loadGroups();
+        }
+
+        document.getElementById('loginForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            try {
+                const res = await fetch('http://localhost:3000/api/login', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ 
+                        username: document.getElementById('username').value, 
+                        password: document.getElementById('password').value 
+                    })
+                });
+                const data = await res.json();
+                if (data.success && data.role === 'student') {
+                    localStorage.setItem('studentToken', data.token);
+                    localStorage.setItem('studentRole', data.role);
+                    localStorage.setItem('studentUsername', document.getElementById('username').value);
+                    window.location.reload();
+                } else if (data.success && data.role !== 'student') {
+                    document.getElementById('loginError').textContent = "Siz o'quvchi emassiz. O'quvchi login/parolini kiriting.";
+                    document.getElementById('loginError').classList.remove('hidden');
+                } else {
+                    document.getElementById('loginError').textContent = data.message || "Login yoki parol xato";
+                    document.getElementById('loginError').classList.remove('hidden');
+                }
+            } catch (err) { 
+                document.getElementById('loginError').textContent = "Server bilan ulanishda xatolik. Server ishga tushirilganmi?";
+                document.getElementById('loginError').classList.remove('hidden');
+            }
+        });
+
+        document.getElementById('logoutBtn').addEventListener('click', () => {
+            localStorage.removeItem('studentToken'); localStorage.removeItem('studentRole'); localStorage.removeItem('studentUsername');
+            window.location.reload();
+        });
+
+        async function loadGroups() {
+            try {
+                const res = await fetch('http://localhost:3000/api/student/groups', {
+                    headers: { 'Authorization': `Bearer ${localStorage.getItem('studentToken')}` }
+                });
+                const data = await res.json();
+                if (data.success) {
+                    if(data.data.length === 0) {
+                        document.getElementById('groupsList').innerHTML = `
+                        <div class="glass rounded-2xl border border-slate-700/50 p-8 text-center col-span-full">
+                            <h3 class="text-lg font-medium text-gray-300 mb-2">Hozircha guruhlar yo'q</h3>
+                            <p class="text-slate-500 text-sm max-w-md mx-auto">Sizga hali guruhlar biriktirilmagan.</p>
+                        </div>`;
+                        return;
+                    }
+
+                    document.getElementById('groupsList').innerHTML = data.data.map(g => `
+                        <div class="glass p-6 rounded-2xl border border-slate-700/50 hover:border-green-500/50 transition-colors group cursor-pointer" onclick="viewLessons(${g.id}, '${g.nomi}')">
+                            <div class="w-12 h-12 bg-green-500/10 rounded-xl flex items-center justify-center mb-4 text-green-400 group-hover:bg-green-500 group-hover:text-white transition-colors">
+                                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 14l9-5-9-5-9 5 9 5z"></path></svg>
+                            </div>
+                            <h3 class="text-xl font-bold text-white mb-1">${g.nomi}</h3>
+                            <p class="text-green-400 text-sm mb-2">To'garak: ${g.club_name}</p>
+                            <p class="text-gray-400 text-xs mb-4">O'qituvchi: ${g.teacher_name} <br> Jadval: ${g.schedule}</p>
+                        </div>
+                    `).join('');
+                }
+            } catch (err) { console.error(err); }
+        }
+
+        function showGroups() {
+            document.getElementById('lessonsSection').classList.add('hidden');
+            document.getElementById('groupsSection').classList.remove('hidden');
+            document.getElementById('pageTitle').textContent = "Guruhlarim";
+        }
+
+        async function viewLessons(groupId, groupName) {
+            document.getElementById('groupsSection').classList.add('hidden');
+            document.getElementById('lessonsSection').classList.remove('hidden');
+            document.getElementById('pageTitle').textContent = "Darslar";
+            document.getElementById('lessonsTitle').textContent = `${groupName} guruhining darslari`;
+            
+            try {
+                const res = await fetch(`http://localhost:3000/api/groups/${groupId}/lessons`, {
+                    headers: { 'Authorization': `Bearer ${localStorage.getItem('studentToken')}` }
+                });
+                const data = await res.json();
+                if (data.success) {
+                    if(data.data.length === 0) {
+                        document.getElementById('lessonsList').innerHTML = '<p class="text-gray-400">Hali darslar joylanmagan.</p>';
+                        return;
+                    }
+
+                    document.getElementById('lessonsList').innerHTML = '';
+                    for (const l of data.data) {
+                        // Get assignments for this lesson
+                        const asRes = await fetch(`http://localhost:3000/api/lessons/${l.id}/assignments`, {
+                            headers: { 'Authorization': `Bearer ${localStorage.getItem('studentToken')}` }
+                        });
+                        const asData = await asRes.json();
+                        let assignmentsHtml = '';
+                        
+                        if(asData.success && asData.data.length > 0) {
+                            assignmentsHtml = `<div class="mt-4 pt-4 border-t border-slate-700">
+                                <h5 class="text-sm font-bold text-purple-400 mb-2">Topshiriqlar:</h5>
+                                ${asData.data.map(a => `
+                                    <div class="bg-slate-800/50 rounded-lg p-4 mb-2">
+                                        <div class="flex justify-between items-start">
+                                            <div>
+                                                <h6 class="text-white font-medium text-sm">${a.title}</h6>
+                                                <p class="text-xs text-gray-400 mt-1">${a.description}</p>
+                                                ${a.file_url ? `<a href="http://localhost:3000/${a.file_url}" target="_blank" class="text-blue-400 text-xs hover:underline mt-2 inline-block">рџ“Ћ Faylni yuklab olish</a>` : ''}
+                                            </div>
+                                            <button onclick="openSubmitModal(${a.id})" class="bg-green-600/20 text-green-400 hover:bg-green-600/40 px-3 py-1.5 rounded-lg text-xs font-medium transition-colors">Javob yuborish</button>
+                                        </div>
+                                    </div>
+                                `).join('')}
+                            </div>`;
+                        }
+
+                        let embedUrl = "";
+                        if(l.video_url && l.video_url.includes('youtube.com/watch?v=')) embedUrl = l.video_url.replace('watch?v=', 'embed/');
+                        else if(l.video_url && l.video_url.includes('youtu.be/')) embedUrl = l.video_url.replace('youtu.be/', 'youtube.com/embed/');
+
+                        document.getElementById('lessonsList').innerHTML += `
+                            <div class="glass p-6 rounded-2xl border border-slate-700/50">
+                                <div class="flex flex-col lg:flex-row gap-6">
+                                    <div class="w-full lg:w-1/2">
+                                        ${embedUrl ? `<iframe class="w-full h-64 rounded-xl" src="${embedUrl}" frameborder="0" allowfullscreen></iframe>` 
+                                                   : `<div class="w-full h-64 bg-slate-800 rounded-xl flex items-center justify-center text-gray-500">Video yo'q</div>`}
+                                    </div>
+                                    <div class="w-full lg:w-1/2 flex flex-col">
+                                        <h4 class="text-xl font-bold text-white mb-2">${l.title}</h4>
+                                        <p class="text-xs text-gray-500 mb-4">${new Date(l.created_at).toLocaleString('uz-UZ')}</p>
+                                        <div class="flex-1">
+                                            ${assignmentsHtml}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        `;
+                    }
+                }
+            } catch (err) { console.error(err); }
+        }
+
+        function openSubmitModal(assignmentId) {
+            document.getElementById('s_assignment_id').value = assignmentId;
+            document.getElementById('submitModal').classList.remove('hidden');
+        }
+
+        document.getElementById('submitForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const formData = new FormData();
+            formData.append('assignment_id', document.getElementById('s_assignment_id').value);
+            formData.append('file', document.getElementById('s_file').files[0]);
+
+            try {
+                const res = await fetch('http://localhost:3000/api/student/submissions', {
+                    method: 'POST',
+                    headers: { 'Authorization': `Bearer ${localStorage.getItem('studentToken')}` },
+                    body: formData
+                });
+                const data = await res.json();
+                if (data.success) {
+                    alert("Vazifa muvaffaqiyatli yuborildi!");
+                    document.getElementById('submitModal').classList.add('hidden');
+                    document.getElementById('submitForm').reset();
+                } else {
+                    alert(data.message);
+                }
+            } catch (err) { console.error(err); }
+        });
+    </script>
+
+    <!-- Dynamic Weather 3D Background Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/tsparticles@2/tsparticles.bundle.min.js"></script>
+    <script src="../JS/weather-bg.js"></script>
+
+</body>
+</html>
+

@@ -1,0 +1,996 @@
+<!DOCTYPE html>
+<html lang="uz" class="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard - GDPI</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="../main.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
+        body { font-family: 'Inter', sans-serif; background-color: #121212; }
+        .header-bg { background-color: #0d1520; }
+        .input-field {
+            width: 100%; background-color: #1a2234; border: 1px solid #374151; color: #fff; padding: 0.75rem 1rem; border-radius: 0.5rem; outline: none; transition: all 0.2s;
+        }
+        .input-field:focus { border-color: #3b82f6; box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.2); }
+        .menu-item { padding: 0.75rem 1rem; border-radius: 0.75rem; color: #9ca3af; font-size: 0.875rem; font-weight: 500; display: flex; align-items: center; gap: 0.75rem; transition: all 0.2s; cursor: pointer; }
+        .menu-item:hover { color: #fff; background-color: rgba(31, 41, 55, 0.5); }
+        .menu-item.active { color: #fff; background-color: #2563eb; box-shadow: 0 4px 6px -1px rgba(37, 99, 235, 0.2); }
+    </style>
+</head>
+<body class="text-gray-300 antialiased selection:bg-blue-500/30 selection:text-blue-200">
+
+<!-- Login Section -->
+<div id="loginSection" class="min-h-screen flex items-center justify-center p-6">
+    <div class="bg-[#0d1520] border border-gray-800 rounded-2xl shadow-2xl p-8 max-w-md w-full relative overflow-hidden">
+        <div class="absolute top-0 right-0 w-32 h-32 bg-purple-500/10 rounded-full blur-3xl"></div>
+        <h2 class="text-2xl font-bold text-white mb-2 text-center relative z-10">Admin Panel</h2>
+        <p class="text-gray-400 text-center text-sm mb-6 relative z-10">Boshqaruv tizimiga kirish</p>
+        
+        <div id="loginError" class="hidden text-red-400 bg-red-500/10 border border-red-500/30 p-3 rounded-lg text-sm mb-4 text-center relative z-10"></div>
+
+        <form id="loginForm" class="space-y-4 relative z-10">
+            <div>
+                <label class="block text-sm text-gray-400 mb-1">Login</label>
+                <input type="text" id="username" class="input-field" required placeholder="admin">
+            </div>
+            <div>
+                <label class="block text-sm text-gray-400 mb-1">Parol</label>
+                <input type="password" id="password" class="input-field" required placeholder="••••••••">
+            </div>
+            <button type="submit" class="w-full bg-blue-600 text-white font-bold py-3 rounded-xl hover:bg-blue-500 transition-colors mt-2 shadow-lg shadow-blue-900/40">
+                Tizimga kirish
+            </button>
+        </form>
+    </div>
+</div>
+
+<!-- Dashboard Section -->
+<div id="dashboardSection" class="hidden h-screen flex overflow-hidden">
+    
+    <!-- Sidebar -->
+    <aside class="w-64 header-bg border-r border-gray-800 flex flex-col shrink-0">
+        <div class="p-6 border-b border-gray-800">
+            <div class="flex items-center gap-3">
+                <img src="../logo.png" alt="GDPI" class="w-10 h-10 object-contain bg-white rounded-full p-1 shadow-sm">
+                <h1 class="text-xl font-bold text-white">Dashboard</h1>
+            </div>
+        </div>
+        <nav class="flex-1 p-4 space-y-2 overflow-y-auto">
+            <div class="menu-item" onclick="switchTab('admins', this)">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 11c0 3.517-1.009 6.799-2.753 9.571m-3.44-2.04l.054-.09A13.916 13.916 0 008 11a4 4 0 118 0c0 1.017-.07 2.019-.203 3m-2.118 6.844A21.88 21.88 0 0015.171 17m3.839 1.132c.645-2.266.99-4.659.99-7.132A8 8 0 008 4.07M3 15.364c.64-1.319 1-2.8 1-4.364 0-1.457.39-2.823 1.07-4"></path></svg>
+                Adminlar
+            </div>
+            <div class="menu-item" onclick="switchTab('teachers', this)">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2 2v2m4 6h.01M5 20h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path></svg>
+                O'qituvchilar
+            </div>
+            <div class="menu-item active" onclick="switchTab('students', this)">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z"></path></svg>
+                O'quvchilar
+            </div>
+            <div class="menu-item" onclick="switchTab('clubs', this)">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"></path></svg>
+                To'garaklar
+            </div>
+            <div class="menu-item" onclick="switchTab('groups', this)">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"></path></svg>
+                Guruhlar
+            </div>
+            <div class="menu-item" onclick="switchTab('news', this)">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1m2 13a2 2 0 01-2-2V7m2 13a2 2 0 002-2V9a2 2 0 00-2-2h-2m-4-3H9M7 16h6M7 8h6v4H7V8z"></path></svg>
+                Yangilik qo'shish
+            </div>
+        </nav>
+        <div class="p-4 border-t border-gray-800">
+            <button id="logoutBtn" class="w-full flex items-center justify-center gap-2 text-sm font-medium text-red-400 hover:text-red-300 bg-red-500/10 hover:bg-red-500/20 px-4 py-2.5 rounded-xl transition-colors">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"></path></svg>
+                Chiqish
+            </button>
+        </div>
+    </aside>
+
+    <!-- Main Content Area -->
+    <div class="flex-1 flex flex-col bg-[#121212] overflow-y-auto">
+        <!-- Header -->
+        <header class="header-bg border-b border-gray-800 px-8 py-4 flex justify-between items-center sticky top-0 z-20">
+            <h2 id="pageTitle" class="text-xl font-bold text-white">O'quvchilar ro'yxati</h2>
+            <a href="../index.html" class="text-sm font-medium text-gray-400 hover:text-white transition-colors">Saytga qaytish</a>
+        </header>
+
+        <div class="p-8 max-w-7xl mx-auto w-full">
+            <!-- VIEW: O'quvchilar -->
+            <div id="view-students" class="view-panel block">
+                <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-6 gap-4">
+                    <p class="text-gray-400 text-sm">To'garaklarga ro'yxatdan o'tgan barcha talabalar</p>
+                    <input type="text" id="searchInput" class="input-field max-w-xs" placeholder="Qidirish...">
+                </div>
+                <div class="bg-[#0d1520] border border-gray-800 rounded-2xl overflow-hidden shadow-xl">
+                    <div class="overflow-x-auto">
+                        <table class="w-full text-left border-collapse whitespace-nowrap">
+                            <thead>
+                                <tr class="bg-gray-800/50 text-gray-400 text-sm uppercase tracking-wider border-b border-gray-800">
+                                    <th class="px-6 py-4 font-medium">ID</th>
+                                    <th class="px-6 py-4 font-medium">O'quvchi</th>
+                                    <th class="px-6 py-4 font-medium">Telefon</th>
+                                    <th class="px-6 py-4 font-medium">O'qish joyi</th>
+                                    <th class="px-6 py-4 font-medium">Fan</th>
+                                    <th class="px-6 py-4 font-medium">Login</th>
+                                    <th class="px-6 py-4 font-medium">Amallar</th>
+                                </tr>
+                            </thead>
+                            <tbody id="studentsTableBody" class="divide-y divide-gray-800 text-sm"></tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <!-- VIEW: O'qituvchilar -->
+            <div id="view-teachers" class="view-panel hidden">
+                <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                    <!-- Add Teacher Form -->
+                    <div class="lg:col-span-1">
+                        <div class="bg-[#0d1520] border border-gray-800 rounded-2xl p-6 shadow-xl sticky top-24">
+                            <h3 id="teacherFormTitle" class="text-lg font-bold text-white mb-4">O'qituvchi qo'shish</h3>
+                            <div id="teacherSuccess" class="hidden text-green-400 bg-green-500/10 p-3 rounded-lg text-sm mb-4">Muvaffaqiyatli saqlandi!</div>
+                            <form id="teacherForm" class="space-y-4">
+                                <input type="hidden" id="t_id">
+                                <div>
+                                    <label class="block text-sm text-gray-400 mb-1">Ism</label>
+                                    <input type="text" id="t_ism" class="input-field" required>
+                                </div>
+                                <div>
+                                    <label class="block text-sm text-gray-400 mb-1">Familiya</label>
+                                    <input type="text" id="t_familiya" class="input-field" required>
+                                </div>
+                                <div>
+                                    <label class="block text-sm text-gray-400 mb-1">Telefon raqami</label>
+                                    <input type="text" id="t_telefon" class="input-field" required placeholder="+998 ">
+                                </div>
+                                <div>
+                                    <label class="block text-sm text-gray-400 mb-1">Fani (Mutaxassislik)</label>
+                                    <input type="text" id="t_fan" class="input-field" required placeholder="Masalan: Informatika">
+                                </div>
+                                <div>
+                                    <label class="block text-sm text-gray-400 mb-1">Login (Tizimga kirish uchun)</label>
+                                    <input type="text" id="t_username" class="input-field" required placeholder="O'qituvchi logini">
+                                </div>
+                                <div>
+                                    <label class="block text-sm text-gray-400 mb-1">Parol</label>
+                                    <input type="text" id="t_password" class="input-field" placeholder="Parol (o'zgartirish shart emas)">
+                                </div>
+                                <div class="flex gap-2">
+                                    <button type="submit" class="flex-1 bg-blue-600 text-white font-bold py-3 rounded-xl hover:bg-blue-500 transition-colors mt-2">Saqlash</button>
+                                    <button type="button" id="cancelTeacherEdit" class="hidden flex-1 bg-gray-700 text-white font-bold py-3 rounded-xl hover:bg-gray-600 transition-colors mt-2">Bekor qilish</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                    <!-- Teachers List -->
+                    <div class="lg:col-span-2">
+                        <div class="bg-[#0d1520] border border-gray-800 rounded-2xl overflow-hidden shadow-xl">
+                            <div class="p-5 border-b border-gray-800 flex justify-between items-center">
+                                <h3 class="text-white font-bold">Barcha o'qituvchilar ro'yxati</h3>
+                            </div>
+                            <div class="overflow-x-auto">
+                                <table class="w-full text-left border-collapse whitespace-nowrap">
+                                    <thead>
+                                        <tr class="bg-gray-800/50 text-gray-400 text-sm uppercase tracking-wider border-b border-gray-800">
+                                            <th class="px-6 py-4 font-medium">O'qituvchi</th>
+                                            <th class="px-6 py-4 font-medium">Fani</th>
+                                            <th class="px-6 py-4 font-medium">Telefon</th>
+                                            <th class="px-6 py-4 font-medium">Login</th>
+                                            <th class="px-6 py-4 font-medium">Amallar</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="teachersTableBody" class="divide-y divide-gray-800 text-sm"></tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- VIEW: Placeholders -->
+            <div id="view-admins" class="view-panel hidden">
+                <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                    <!-- Add Admin Form -->
+                    <div class="lg:col-span-1">
+                        <div class="bg-[#0d1520] border border-gray-800 rounded-2xl p-6 shadow-xl sticky top-24">
+                            <h3 class="text-lg font-bold text-white mb-4">Yangi Admin qo'shish</h3>
+                            <div id="adminSuccess" class="hidden text-green-400 bg-green-500/10 p-3 rounded-lg text-sm mb-4">Muvaffaqiyatli qo'shildi!</div>
+                            <div id="adminError" class="hidden text-red-400 bg-red-500/10 p-3 rounded-lg text-sm mb-4">Xatolik!</div>
+                            <form id="adminForm" class="space-y-4">
+                                <div>
+                                    <label class="block text-sm text-gray-400 mb-1">Login</label>
+                                    <input type="text" id="a_username" class="input-field" required placeholder="admin2">
+                                </div>
+                                <div>
+                                    <label class="block text-sm text-gray-400 mb-1">Parol</label>
+                                    <input type="password" id="a_password" class="input-field" required placeholder="••••••••">
+                                </div>
+                                <button type="submit" class="w-full bg-blue-600 text-white font-bold py-3 rounded-xl hover:bg-blue-500 transition-colors mt-2">Saqlash</button>
+                            </form>
+                        </div>
+                    </div>
+                    <!-- Admins List -->
+                    <div class="lg:col-span-2">
+                        <div class="bg-[#0d1520] border border-gray-800 rounded-2xl overflow-hidden shadow-xl">
+                            <div class="p-5 border-b border-gray-800 flex justify-between items-center">
+                                <h3 class="text-white font-bold">Barcha adminlar ro'yxati</h3>
+                            </div>
+                            <div class="overflow-x-auto">
+                                <table class="w-full text-left border-collapse whitespace-nowrap">
+                                    <thead>
+                                        <tr class="bg-gray-800/50 text-gray-400 text-sm uppercase tracking-wider border-b border-gray-800">
+                                            <th class="px-6 py-4 font-medium">ID</th>
+                                            <th class="px-6 py-4 font-medium">Login</th>
+                                            <th class="px-6 py-4 font-medium">Parol</th>
+                                            <th class="px-6 py-4 font-medium">Amal</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="adminsTableBody" class="divide-y divide-gray-800 text-sm"></tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div id="view-clubs" class="view-panel hidden">
+                <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                    <!-- Add Club Form -->
+                    <div class="lg:col-span-1">
+                        <div class="bg-[#0d1520] border border-gray-800 rounded-2xl p-6 shadow-xl sticky top-24">
+                            <h3 class="text-lg font-bold text-white mb-4" id="clubFormTitle">Yangi To'garak qo'shish</h3>
+                            <div id="clubSuccess" class="hidden text-green-400 bg-green-500/10 p-3 rounded-lg text-sm mb-4">Muvaffaqiyatli qo'shildi!</div>
+                            <div id="clubError" class="hidden text-red-400 bg-red-500/10 p-3 rounded-lg text-sm mb-4">Xatolik!</div>
+                            <form id="clubForm" class="space-y-4" enctype="multipart/form-data">
+                                <input type="hidden" id="clubId" value="" />
+                                <div>
+                                    <label class="block text-sm text-gray-400 mb-1">Sarlavha</label>
+                                    <input type="text" id="c_title" class="input-field" required placeholder="To'garak nomi">
+                                </div>
+                                <div>
+                                    <label class="block text-sm text-gray-400 mb-1">O'qituvchi</label>
+                                    <select id="c_teacher" class="input-field bg-[#0d1520]" required>
+                                        <option value="">O'qituvchini tanlang</option>
+                                    </select>
+                                </div>
+                                <div>
+                                    <label class="block text-sm text-gray-400 mb-1">Paragraf</label>
+                                    <input type="text" id="c_paragraph" class="input-field" placeholder="Qisqa tavsif">
+                                </div>
+                                <div>
+                                    <label class="block text-sm text-gray-400 mb-1">Izoh</label>
+                                    <textarea id="c_description" class="input-field" rows="3" placeholder="To'liq tavsif"></textarea>
+                                </div>
+                                <div>
+                                    <label class="block text-sm text-gray-400 mb-1">Rasm</label>
+                                    <input type="file" id="c_image" accept="image/*" class="input-field" >
+                                </div>
+                                <button type="submit" class="w-full bg-blue-600 text-white font-bold py-3 rounded-xl hover:bg-blue-500 transition-colors mt-2">Saqlash</button>
+                            </form>
+                        </div>
+                    </div>
+                    <!-- Clubs List -->
+                    <div class="lg:col-span-2">
+                        <div class="bg-[#0d1520] border border-gray-800 rounded-2xl overflow-hidden shadow-xl">
+                            <div class="p-5 border-b border-gray-800 flex justify-between items-center">
+                                <h3 class="text-white font-bold">Barcha to'garaklar</h3>
+                            </div>
+                            <div class="overflow-x-auto">
+                                <table class="w-full text-left border-collapse whitespace-nowrap">
+                                    <thead>
+                                        <tr class="bg-gray-800/50 text-gray-400 text-sm uppercase tracking-wider border-b border-gray-800">
+                                            <th class="px-6 py-4 font-medium">ID</th>
+                                            <th class="px-6 py-4 font-medium">Sarlavha</th>
+                                            <th class="px-6 py-4 font-medium">Rasm</th>
+                                            <th class="px-6 py-4 font-medium">Amal</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="clubsTableBody" class="divide-y divide-gray-800 text-sm"></tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="view-groups" class="view-panel hidden">
+                <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                    <!-- Add Group Form -->
+                    <div class="lg:col-span-1">
+                        <div class="bg-[#0d1520] border border-gray-800 rounded-2xl p-6 shadow-xl sticky top-24">
+                            <h3 class="text-lg font-bold text-white mb-4">Yangi Guruh qo'shish</h3>
+                            <div id="groupSuccess" class="hidden text-green-400 bg-green-500/10 p-3 rounded-lg text-sm mb-4">Muvaffaqiyatli qo'shildi!</div>
+                            <form id="groupForm" class="space-y-4">
+                                <div>
+                                    <label class="block text-sm text-gray-400 mb-1">Guruh nomi</label>
+                                    <input type="text" id="g_nomi" class="input-field" required placeholder="Masalan: Frontend N1">
+                                </div>
+                                <div>
+                                    <label class="block text-sm text-gray-400 mb-1">To'garak</label>
+                                    <select id="g_club" class="input-field bg-[#0d1520]" required>
+                                        <option value="">To'garakni tanlang</option>
+                                    </select>
+                                </div>
+                                <div>
+                                    <label class="block text-sm text-gray-400 mb-1">O'qituvchi</label>
+                                    <select id="g_teacher" class="input-field bg-[#0d1520]" required>
+                                        <option value="">O'qituvchini tanlang</option>
+                                    </select>
+                                </div>
+                                <div>
+                                    <label class="block text-sm text-gray-400 mb-1">Dars kunlari (Jadval)</label>
+                                    <input type="text" id="g_schedule" class="input-field" required placeholder="Dush, Chor, Juma 15:00">
+                                </div>
+                                <button type="submit" class="w-full bg-blue-600 text-white font-bold py-3 rounded-xl hover:bg-blue-500 transition-colors mt-2">Saqlash</button>
+                            </form>
+                        </div>
+                    </div>
+                    <!-- Groups List -->
+                    <div class="lg:col-span-2">
+                        <div class="bg-[#0d1520] border border-gray-800 rounded-2xl overflow-hidden shadow-xl">
+                            <div class="p-5 border-b border-gray-800 flex justify-between items-center">
+                                <h3 class="text-white font-bold">Barcha guruhlar</h3>
+                            </div>
+                            <div class="overflow-x-auto">
+                                <table class="w-full text-left border-collapse whitespace-nowrap">
+                                    <thead>
+                                        <tr class="bg-gray-800/50 text-gray-400 text-sm uppercase tracking-wider border-b border-gray-800">
+                                            <th class="px-6 py-4 font-medium">Guruh nomi</th>
+                                            <th class="px-6 py-4 font-medium">To'garak</th>
+                                            <th class="px-6 py-4 font-medium">O'qituvchi</th>
+                                            <th class="px-6 py-4 font-medium">Jadval</th>
+                                            <th class="px-6 py-4 font-medium">O'quvchilar</th>
+                                            <th class="px-6 py-4 font-medium">Amal</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="groupsTableBody" class="divide-y divide-gray-800 text-sm"></tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="view-news" class="view-panel hidden flex flex-col items-center justify-center py-20 text-center">
+                <svg class="w-16 h-16 text-gray-700 mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1m2 13a2 2 0 01-2-2V7m2 13a2 2 0 002-2V9a2 2 0 00-2-2h-2m-4-3H9M7 16h6M7 8h6v4H7V8z"></path></svg>
+                <h3 class="text-xl font-bold text-white mb-2">Yangilik va E'lonlar</h3>
+                <p class="text-gray-500">Bu qism tez orada ishga tushiriladi...</p>
+            </div>
+            
+        </div>
+    </div>
+</div>
+
+<!-- Edit Student Modal -->
+<div id="editStudentModal" class="hidden fixed inset-0 bg-black/80 z-50 flex items-center justify-center p-4">
+    <div class="bg-[#1a2234] border border-gray-800 rounded-2xl p-6 w-full max-w-md shadow-2xl relative">
+        <button onclick="closeEditStudentModal()" class="absolute top-4 right-4 text-gray-400 hover:text-white">
+            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+        </button>
+        <h3 class="text-xl font-bold text-white mb-4">O'quvchini tahrirlash</h3>
+        <form id="editStudentForm" class="space-y-4">
+            <input type="hidden" id="editStudentId" />
+            <div class="grid grid-cols-2 gap-4">
+                <div>
+                    <label class="block text-sm text-gray-400 mb-1">Ism</label>
+                    <input type="text" id="es_ism" required class="w-full bg-[#0d1520] border border-gray-700 text-white p-3 rounded-xl outline-none focus:border-blue-500">
+                </div>
+                <div>
+                    <label class="block text-sm text-gray-400 mb-1">Familiya</label>
+                    <input type="text" id="es_familiya" required class="w-full bg-[#0d1520] border border-gray-700 text-white p-3 rounded-xl outline-none focus:border-blue-500">
+                </div>
+            </div>
+            <div class="grid grid-cols-2 gap-4">
+                <div>
+                    <label class="block text-sm text-gray-400 mb-1">Telefon</label>
+                    <input type="text" id="es_telefon" required class="w-full bg-[#0d1520] border border-gray-700 text-white p-3 rounded-xl outline-none focus:border-blue-500">
+                </div>
+                <div>
+                    <label class="block text-sm text-gray-400 mb-1">O'qish joyi</label>
+                    <input type="text" id="es_oqish_joyi" class="w-full bg-[#0d1520] border border-gray-700 text-white p-3 rounded-xl outline-none focus:border-blue-500">
+                </div>
+            </div>
+            <div>
+                <label class="block text-sm text-gray-400 mb-1">Fan / Yo'nalish</label>
+                <input type="text" id="es_fan" required class="w-full bg-[#0d1520] border border-gray-700 text-white p-3 rounded-xl outline-none focus:border-blue-500">
+            </div>
+            <div class="grid grid-cols-2 gap-4">
+                <div>
+                    <label class="block text-sm text-gray-400 mb-1">Login</label>
+                    <input type="text" id="es_username" required class="w-full bg-[#0d1520] border border-gray-700 text-white p-3 rounded-xl outline-none focus:border-blue-500">
+                </div>
+                <div>
+                    <label class="block text-sm text-gray-400 mb-1">Parol</label>
+                    <input type="text" id="es_password" placeholder="O'zgartirish shart emas" class="w-full bg-[#0d1520] border border-gray-700 text-white p-3 rounded-xl outline-none focus:border-blue-500">
+                </div>
+            </div>
+            <button type="submit" class="w-full bg-blue-600 hover:bg-blue-500 text-white font-bold py-3 rounded-xl transition-colors mt-2">
+                Saqlash
+            </button>
+        </form>
+    </div>
+</div>
+
+<!-- Add Student to Group Modal -->
+<div id="studentGroupModal" class="hidden fixed inset-0 bg-black/80 z-50 flex items-center justify-center p-4">
+    <div class="bg-[#1a2234] border border-gray-800 rounded-2xl p-6 w-full max-w-md shadow-2xl relative">
+        <button onclick="closeStudentGroupModal()" class="absolute top-4 right-4 text-gray-400 hover:text-white">
+            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+        </button>
+        <h3 class="text-xl font-bold text-white mb-4">Guruhga o'quvchi qo'shish</h3>
+        <input type="hidden" id="modalGroupId" />
+        <div class="space-y-4">
+            <div>
+                <label class="block text-sm text-gray-400 mb-1">O'quvchini tanlang</label>
+                <select id="modalStudentSelect" class="w-full bg-[#0d1520] border border-gray-700 text-white p-3 rounded-xl outline-none focus:border-blue-500">
+                    <option value="">Tanlang...</option>
+                </select>
+            </div>
+            <button onclick="submitStudentToGroup()" class="w-full bg-blue-600 hover:bg-blue-500 text-white font-bold py-3 rounded-xl transition-colors">
+                Qo'shish
+            </button>
+        </div>
+    </div>
+</div>
+
+<script>
+    const loginSection = document.getElementById('loginSection');
+    const dashboardSection = document.getElementById('dashboardSection');
+    let allStudents = [];
+
+    // Authentication
+    const token = localStorage.getItem('adminToken');
+    if (token) showDashboard();
+
+    document.getElementById('loginForm').addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const username = document.getElementById('username').value;
+        const password = document.getElementById('password').value;
+        try {
+            const res = await fetch('http://localhost:3000/api/login', {
+                method: 'POST', headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ username, password })
+            });
+            const data = await res.json();
+            if (data.success && data.role === 'admin') {
+                localStorage.setItem('adminToken', data.token);
+                showDashboard();
+            } else if (data.success && data.role !== 'admin') {
+                document.getElementById('loginError').textContent = "Siz admin emassiz. Admin login/parolini kiriting.";
+                document.getElementById('loginError').classList.remove('hidden');
+            } else {
+                document.getElementById('loginError').textContent = data.message || "Login yoki parol xato";
+                document.getElementById('loginError').classList.remove('hidden');
+            }
+        } catch (err) {
+            document.getElementById('loginError').textContent = "Server bilan ulanishda xatolik. Server ishga tushirilganmi?";
+            document.getElementById('loginError').classList.remove('hidden');
+        }
+    });
+
+    document.getElementById('logoutBtn').addEventListener('click', () => {
+        localStorage.removeItem('adminToken');
+        loginSection.classList.remove('hidden');
+        dashboardSection.classList.add('hidden');
+    });
+
+    function showDashboard() {
+        loginSection.classList.add('hidden');
+        dashboardSection.classList.remove('hidden');
+        loadStudents();
+    }
+
+    // Tabs logic
+    const titles = {
+        'admins': 'Adminlar',
+        'teachers': "O'qituvchilar",
+        'students': "O'quvchilar ro'yxati",
+        'clubs': "To'garaklar",
+        'groups': "Guruhlar",
+        'news': "Yangilik qo'shish"
+    };
+
+    function switchTab(tabId, element) {
+    document.querySelectorAll('.menu-item').forEach(el => el.classList.remove('active'));
+    element.classList.add('active');
+    document.querySelectorAll('.view-panel').forEach(el => el.classList.add('hidden'));
+    document.getElementById(`view-${tabId}`).classList.remove('hidden');
+    document.getElementById('pageTitle').textContent = titles[tabId];
+
+    if (tabId === 'teachers') loadTeachers();
+    if (tabId === 'students') loadStudents();
+    if (tabId === 'admins') loadAdmins();
+    if (tabId === 'clubs') { loadClubs(); loadTeachers(); }
+    if (tabId === 'groups') { loadGroups(); loadClubsForSelect(); loadTeachersForGroups(); }
+}
+// duplicate switchTab code removed
+
+    // Load Students
+    async function loadStudents() {
+        try {
+            const res = await fetch('http://localhost:3000/api/students', {
+                headers: { 'Authorization': `Bearer ${localStorage.getItem('adminToken')}` }
+            });
+            const data = await res.json();
+            if (data.success) {
+                allStudents = data.data;
+                renderStudents(allStudents);
+            }
+        } catch (err) { console.error(err); }
+    }
+
+    function renderStudents(data) {
+        const tbody = document.getElementById('studentsTableBody');
+        tbody.innerHTML = data.map((s, index) => `
+            <tr class="hover:bg-gray-800/30 transition-colors animate-slide-up" style="animation-delay: ${index * 50}ms">
+                <td class="px-6 py-4 text-gray-500 font-mono">#${s.id}</td>
+                <td class="px-6 py-4 font-medium text-white">${s.ism} ${s.familiya}</td>
+                <td class="px-6 py-4 text-gray-300 font-mono">${s.telefon}</td>
+                <td class="px-6 py-4 text-gray-400">${s.oqish_joyi || '-'}</td>
+                <td class="px-6 py-4"><span class="inline-flex px-2.5 py-0.5 rounded-full text-xs font-medium bg-blue-500/10 text-blue-400">${s.tanlangan_fan}</span></td>
+                <td class="px-6 py-4 text-gray-300 font-mono">${s.username}</td>
+                <td class="px-6 py-4 flex items-center gap-2">
+                    <button onclick="editStudent(${s.id})" title="Tahrirlash" class="p-2 rounded-lg text-blue-400 hover:text-white bg-blue-500/10 hover:bg-blue-500 transition-colors group">
+                        <svg class="w-4 h-4 group-hover:scale-110 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z"></path></svg>
+                    </button>
+                    <button onclick="deleteStudent(${s.id})" title="O'chirish" class="p-2 rounded-lg text-red-400 hover:text-white bg-red-500/10 hover:bg-red-500 transition-colors group">
+                        <svg class="w-4 h-4 group-hover:scale-110 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path></svg>
+                    </button>
+                </td>
+            </tr>
+        `).join('');
+    }
+
+    document.getElementById('searchInput').addEventListener('input', (e) => {
+        const q = e.target.value.toLowerCase();
+        renderStudents(allStudents.filter(s => s.ism.toLowerCase().includes(q) || s.familiya.toLowerCase().includes(q) || s.tanlangan_fan.toLowerCase().includes(q)));
+    });
+
+    function editStudent(id) {
+        const student = allStudents.find(s => s.id === id);
+        if (!student) return;
+        document.getElementById('editStudentId').value = student.id;
+        document.getElementById('es_ism').value = student.ism;
+        document.getElementById('es_familiya').value = student.familiya;
+        document.getElementById('es_telefon').value = student.telefon;
+        document.getElementById('es_oqish_joyi').value = student.oqish_joyi || '';
+        document.getElementById('es_fan').value = student.tanlangan_fan || '';
+        document.getElementById('es_username').value = student.username || '';
+        document.getElementById('es_password').value = '';
+        document.getElementById('editStudentModal').classList.remove('hidden');
+    }
+
+    function closeEditStudentModal() {
+        document.getElementById('editStudentModal').classList.add('hidden');
+    }
+
+    document.getElementById('editStudentForm')?.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const id = document.getElementById('editStudentId').value;
+        const payload = {
+            ism: document.getElementById('es_ism').value,
+            familiya: document.getElementById('es_familiya').value,
+            telefon: document.getElementById('es_telefon').value,
+            oqish_joyi: document.getElementById('es_oqish_joyi').value,
+            tanlangan_fan: document.getElementById('es_fan').value,
+            username: document.getElementById('es_username').value,
+            password: document.getElementById('es_password').value
+        };
+        try {
+            const res = await fetch(`http://localhost:3000/api/students/${id}`, {
+                method: 'PUT',
+                headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${localStorage.getItem('adminToken')}` },
+                body: JSON.stringify(payload)
+            });
+            const data = await res.json();
+            if (data.success) {
+                alert("O'quvchi ma'lumotlari yangilandi!");
+                closeEditStudentModal();
+                loadStudents();
+            } else {
+                alert(data.message || "Xatolik yuz berdi");
+            }
+        } catch (err) { console.error(err); }
+    });
+
+    async function deleteStudent(id) {
+        if (!confirm("Haqiqatan ham bu o'quvchini tizimdan o'chirib tashlamoqchimisiz? (Bu uning barcha guruhlaridagi ishtirokini ham o'chiradi)")) return;
+        try {
+            const res = await fetch(`http://localhost:3000/api/students/${id}`, {
+                method: 'DELETE',
+                headers: { 'Authorization': `Bearer ${localStorage.getItem('adminToken')}` }
+            });
+            const data = await res.json();
+            if (data.success) {
+                loadStudents();
+            } else {
+                alert(data.message || "Xatolik");
+            }
+        } catch (err) { console.error(err); }
+    }
+
+    // Load & Add Teachers
+    async function loadTeachers() {
+        try {
+            const res = await fetch('http://localhost:3000/api/teachers', {
+                headers: { 'Authorization': `Bearer ${localStorage.getItem('adminToken')}` }
+            });
+            const data = await res.json();
+            if (data.success) {
+                allTeachers = data.data;
+                document.getElementById('teachersTableBody').innerHTML = data.data.map(t => `
+                    <tr class="hover:bg-gray-800/30 transition-colors">
+                        <td class="px-6 py-4 font-medium text-white">${t.ism} ${t.familiya}</td>
+                        <td class="px-6 py-4"><span class="inline-flex px-2.5 py-0.5 rounded-full text-xs font-medium bg-purple-500/10 text-purple-400">${t.fan}</span></td>
+                        <td class="px-6 py-4 text-gray-300 font-mono">${t.telefon}</td>
+                        <td class="px-6 py-4 text-gray-300 font-mono">${t.username}</td>
+                        <td class="px-6 py-4">
+                            <button onclick="editTeacher(${t.id})" class="text-xs font-medium text-blue-400 hover:text-blue-300 bg-blue-500/10 hover:bg-blue-500/20 px-3 py-1.5 rounded-lg mr-2 transition-colors">Tahrirlash</button>
+                            <button onclick="deleteTeacher(${t.id})" class="text-xs font-medium text-red-400 hover:text-red-300 bg-red-500/10 hover:bg-red-500/20 px-3 py-1.5 rounded-lg transition-colors">O'chirish</button>
+                        </td>
+                    </tr>
+                `).join('');
+                const teacherSelect = document.getElementById('c_teacher');
+                if (teacherSelect) {
+                    teacherSelect.innerHTML = '<option value="">O\'qituvchini tanlang</option>' + 
+                        data.data.map(t => `<option value="${t.id}">${t.ism} ${t.familiya}</option>`).join('');
+                }
+            }
+        } catch (err) { console.error(err); }
+    }
+
+    document.getElementById('teacherForm').addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const id = document.getElementById('t_id').value;
+        const payload = {
+            ism: document.getElementById('t_ism').value,
+            familiya: document.getElementById('t_familiya').value,
+            telefon: document.getElementById('t_telefon').value,
+            fan: document.getElementById('t_fan').value,
+            username: document.getElementById('t_username').value,
+            password: document.getElementById('t_password').value
+        };
+        const method = id ? 'PUT' : 'POST';
+        const url = id ? `http://localhost:3000/api/teachers/${id}` : 'http://localhost:3000/api/teachers';
+        try {
+            const res = await fetch(url, {
+                method: method,
+                headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${localStorage.getItem('adminToken')}` },
+                body: JSON.stringify(payload)
+            });
+            const data = await res.json();
+            if (data.success) {
+                document.getElementById('teacherSuccess').classList.remove('hidden');
+                resetTeacherForm();
+                setTimeout(() => document.getElementById('teacherSuccess').classList.add('hidden'), 3000);
+                loadTeachers();
+            } else {
+                alert("Xatolik: " + data.message);
+            }
+        } catch (err) { console.error(err); }
+    });
+
+    function resetTeacherForm() {
+        document.getElementById('teacherForm').reset();
+        document.getElementById('t_id').value = '';
+        document.getElementById('teacherFormTitle').textContent = "O'qituvchi qo'shish";
+        document.getElementById('cancelTeacherEdit').classList.add('hidden');
+    }
+
+    document.getElementById('cancelTeacherEdit').addEventListener('click', resetTeacherForm);
+
+    let allTeachers = [];
+    async function editTeacher(id) {
+        const t = allTeachers.find(x => x.id === id);
+        if (!t) return;
+        document.getElementById('t_id').value = t.id;
+        document.getElementById('t_ism').value = t.ism;
+        document.getElementById('t_familiya').value = t.familiya;
+        document.getElementById('t_telefon').value = t.telefon;
+        document.getElementById('t_fan').value = t.fan;
+        document.getElementById('t_username').value = t.username;
+        document.getElementById('t_password').value = '';
+        document.getElementById('teacherFormTitle').textContent = "O'qituvchini tahrirlash";
+        document.getElementById('cancelTeacherEdit').classList.remove('hidden');
+        document.getElementById('teacherForm').scrollIntoView({ behavior: 'smooth' });
+    }
+
+    async function deleteTeacher(id) {
+        if (!confirm("Haqiqatan ham bu o'qituvchini o'chirmoqchimisiz?")) return;
+        try {
+            const res = await fetch(`http://localhost:3000/api/teachers/${id}`, {
+                method: 'DELETE',
+                headers: { 'Authorization': `Bearer ${localStorage.getItem('adminToken')}` }
+            });
+            const data = await res.json();
+            if (data.success) {
+                loadTeachers();
+            } else {
+                alert(data.message);
+            }
+        } catch (err) { console.error(err); }
+    }
+
+    // Load & Add Admins
+    async function loadAdmins() {
+        try {
+            const res = await fetch('http://localhost:3000/api/admins', {
+                headers: { 'Authorization': `Bearer ${localStorage.getItem('adminToken')}` }
+            });
+            const data = await res.json();
+            if (data.success) {
+                document.getElementById('adminsTableBody').innerHTML = data.data.map(a => `
+                    <tr class="hover:bg-gray-800/30 transition-colors">
+                        <td class="px-6 py-4 text-gray-500 font-mono">#${a.id}</td>
+                        <td class="px-6 py-4 font-medium text-white">${a.username}</td>
+                        <td class="px-6 py-4 text-gray-400 font-mono">${a.password}</td>
+                        <td class="px-6 py-4">
+                            <button onclick="deleteAdmin(${a.id})" class="text-xs font-medium text-red-400 hover:text-red-300 bg-red-500/10 hover:bg-red-500/20 px-3 py-1.5 rounded-lg transition-colors">
+                                O'chirish
+                            </button>
+                        </td>
+                    </tr>
+                `).join('');
+            }
+        } catch (err) { console.error(err); }
+    }
+
+    document.getElementById('adminForm')?.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const payload = {
+            username: document.getElementById('a_username').value,
+            password: document.getElementById('a_password').value
+        };
+        try {
+            const res = await fetch('http://localhost:3000/api/admins', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${localStorage.getItem('adminToken')}` },
+                body: JSON.stringify(payload)
+            });
+            const data = await res.json();
+            if (data.success) {
+                document.getElementById('adminSuccess').classList.remove('hidden');
+                document.getElementById('adminError').classList.add('hidden');
+                document.getElementById('adminForm').reset();
+                setTimeout(() => document.getElementById('adminSuccess').classList.add('hidden'), 3000);
+                loadAdmins();
+            } else {
+                document.getElementById('adminError').textContent = data.message;
+                document.getElementById('adminError').classList.remove('hidden');
+            }
+        } catch (err) { console.error(err); }
+    });
+
+    async function deleteAdmin(id) {
+        if (!confirm("Haqiqatan ham bu adminni o'chirmoqchimisiz?")) return;
+        try {
+            const res = await fetch(`http://localhost:3000/api/admins/${id}`, {
+                method: 'DELETE',
+                headers: { 'Authorization': `Bearer ${localStorage.getItem('adminToken')}` }
+            });
+            const data = await res.json();
+            if (data.success) {
+                loadAdmins();
+            } else {
+                alert(data.message);
+            }
+        } catch (err) { console.error(err); }
+    }
+
+    // Load & Manage Clubs
+    let allClubs = [];
+    async function loadClubs() {
+        try {
+            const res = await fetch('http://localhost:3000/api/clubs', {
+                headers: { 'Authorization': `Bearer ${localStorage.getItem('adminToken')}` }
+            });
+            const data = await res.json();
+            if (data.success) {
+                allClubs = data.data;
+                document.getElementById('clubsTableBody').innerHTML = data.data.map(c => `
+                    <tr class="hover:bg-gray-800/30 transition-colors">
+                        <td class="px-6 py-4 text-gray-500 font-mono">#${c.id}</td>
+                        <td class="px-6 py-4 font-medium text-white">${c.title}</td>
+                        <td class="px-6 py-4"><img src="../${c.imagePath}" alt="${c.title}" class="h-12 w-12 object-cover rounded"/></td>
+                        <td class="px-6 py-4">
+                            <button onclick="editClub(${c.id})" class="text-xs font-medium text-blue-400 hover:text-blue-300 bg-blue-500/10 hover:bg-blue-500/20 px-3 py-1.5 rounded-lg mr-2 transition-colors">Tahrirlash</button>
+                            <button onclick="deleteClub(${c.id})" class="text-xs font-medium text-red-400 hover:text-red-300 bg-red-500/10 hover:bg-red-500/20 px-3 py-1.5 rounded-lg transition-colors">O'chirish</button>
+                        </td>
+                    </tr>`).join('');
+            }
+        } catch (err) { console.error(err); }
+    }
+
+    document.getElementById('clubForm')?.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const id = document.getElementById('clubId').value;
+        const formData = new FormData();
+        formData.append('title', document.getElementById('c_title').value);
+        formData.append('teacher_id', document.getElementById('c_teacher').value);
+        const selectedTeacher = document.getElementById('c_teacher').options[document.getElementById('c_teacher').selectedIndex].text;
+        formData.append('teacher_name', selectedTeacher !== "O'qituvchini tanlang" ? selectedTeacher : "");
+        formData.append('paragraph', document.getElementById('c_paragraph').value);
+        formData.append('description', document.getElementById('c_description').value);
+        const imageFile = document.getElementById('c_image').files[0];
+        if (imageFile) formData.append('image', imageFile);
+        const url = id ? `http://localhost:3000/api/clubs/${id}` : 'http://localhost:3000/api/clubs';
+        const method = id ? 'PUT' : 'POST';
+        try {
+            const res = await fetch(url, {
+                method,
+                headers: { 'Authorization': `Bearer ${localStorage.getItem('adminToken')}` },
+                body: formData
+            });
+            const data = await res.json();
+            if (data.success) {
+                document.getElementById(id ? 'clubSuccess' : 'clubSuccess').textContent = data.message;
+                document.getElementById('clubSuccess').classList.remove('hidden');
+                document.getElementById('clubError').classList.add('hidden');
+                document.getElementById('clubForm').reset();
+                document.getElementById('clubId').value = '';
+                document.getElementById('clubFormTitle').textContent = "Yangi To'garak qo'shish";
+                setTimeout(() => document.getElementById('clubSuccess').classList.add('hidden'), 3000);
+                loadClubs();
+            } else {
+                document.getElementById('clubError').textContent = data.message;
+                document.getElementById('clubError').classList.remove('hidden');
+            }
+        } catch (err) { console.error(err); }
+    });
+
+    function editClub(id) {
+        const club = allClubs.find(c => c.id === id);
+        if (!club) return;
+        document.getElementById('clubId').value = club.id;
+        document.getElementById('c_title').value = club.title;
+        if (club.teacher_id) document.getElementById('c_teacher').value = club.teacher_id;
+        document.getElementById('c_paragraph').value = club.paragraph || '';
+        document.getElementById('c_description').value = club.description || '';
+        document.getElementById('clubFormTitle').textContent = "To'garakni tahrirlash";
+        document.getElementById('clubForm').scrollIntoView({ behavior: 'smooth' });
+    }
+
+    async function deleteClub(id) {
+        if (!confirm("Haqiqatan ham bu to'garakni o'chirmoqchimisiz?")) return;
+        try {
+            const res = await fetch(`http://localhost:3000/api/clubs/${id}`, {
+                method: 'DELETE',
+                headers: { 'Authorization': `Bearer ${localStorage.getItem('adminToken')}` }
+            });
+            const data = await res.json();
+            if (data.success) {
+                loadClubs();
+            } else {
+                alert(data.message);
+            }
+        } catch (err) { console.error(err); }
+    }
+
+    // Load & Manage Groups
+    async function loadGroups() {
+        try {
+            const res = await fetch('http://localhost:3000/api/groups', {
+                headers: { 'Authorization': `Bearer ${localStorage.getItem('adminToken')}` }
+            });
+            const data = await res.json();
+            if (data.success) {
+                document.getElementById('groupsTableBody').innerHTML = data.data.map(g => `
+                    <tr class="hover:bg-gray-800/30 transition-colors">
+                        <td class="px-6 py-4 font-medium text-white">${g.nomi}</td>
+                        <td class="px-6 py-4 text-blue-400">${g.club_name}</td>
+                        <td class="px-6 py-4">${g.teacher_name}</td>
+                        <td class="px-6 py-4 text-gray-400 font-mono">${g.schedule}</td>
+                        <td class="px-6 py-4"><button onclick="viewGroupStudents(${g.id})" class="text-xs font-medium text-purple-400 bg-purple-500/10 px-3 py-1.5 rounded-lg hover:bg-purple-500/20">O'quvchi qo'shish</button></td>
+                        <td class="px-6 py-4">
+                            <button onclick="deleteGroup(${g.id})" class="text-xs font-medium text-red-400 hover:text-red-300 bg-red-500/10 hover:bg-red-500/20 px-3 py-1.5 rounded-lg transition-colors">O'chirish</button>
+                        </td>
+                    </tr>`).join('');
+            }
+        } catch (err) { console.error(err); }
+    }
+
+    async function loadClubsForSelect() {
+        try {
+            const res = await fetch('http://localhost:3000/api/clubs');
+            const data = await res.json();
+            if (data.success) {
+                document.getElementById('g_club').innerHTML = `<option value="">To'garakni tanlang</option>` + 
+                    data.data.map(c => `<option value="${c.id}">${c.title}</option>`).join('');
+            }
+        } catch (err) { console.error(err); }
+    }
+
+    async function loadTeachersForGroups() {
+        try {
+            const res = await fetch('http://localhost:3000/api/teachers', {
+                headers: { 'Authorization': `Bearer ${localStorage.getItem('adminToken')}` }
+            });
+            const data = await res.json();
+            if (data.success) {
+                document.getElementById('g_teacher').innerHTML = `<option value="">O'qituvchini tanlang</option>` + 
+                    data.data.map(t => `<option value="${t.id}">${t.ism} ${t.familiya}</option>`).join('');
+            }
+        } catch (err) { console.error(err); }
+    }
+
+    document.getElementById('groupForm')?.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const payload = {
+            nomi: document.getElementById('g_nomi').value,
+            club_id: document.getElementById('g_club').value,
+            teacher_id: document.getElementById('g_teacher').value,
+            schedule: document.getElementById('g_schedule').value
+        };
+        try {
+            const res = await fetch('http://localhost:3000/api/groups', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${localStorage.getItem('adminToken')}` },
+                body: JSON.stringify(payload)
+            });
+            const data = await res.json();
+            if (data.success) {
+                document.getElementById('groupSuccess').classList.remove('hidden');
+                document.getElementById('groupForm').reset();
+                setTimeout(() => document.getElementById('groupSuccess').classList.add('hidden'), 3000);
+                loadGroups();
+            }
+        } catch (err) { console.error(err); }
+    });
+
+    async function deleteGroup(id) {
+        if (!confirm("Haqiqatan ham bu guruhni o'chirmoqchimisiz?")) return;
+        try {
+            const res = await fetch(`http://localhost:3000/api/groups/${id}`, {
+                method: 'DELETE',
+                headers: { 'Authorization': `Bearer ${localStorage.getItem('adminToken')}` }
+            });
+            const data = await res.json();
+            if (data.success) loadGroups();
+        } catch (err) { console.error(err); }
+    }
+
+    function viewGroupStudents(id) {
+        document.getElementById('modalGroupId').value = id;
+        const select = document.getElementById('modalStudentSelect');
+        select.innerHTML = '<option value="">Tanlang...</option>' + allStudents.map(s => `<option value="${s.id}">${s.ism} ${s.familiya} (${s.username})</option>`).join('');
+        document.getElementById('studentGroupModal').classList.remove('hidden');
+    }
+    
+    function closeStudentGroupModal() {
+        document.getElementById('studentGroupModal').classList.add('hidden');
+    }
+
+    async function submitStudentToGroup() {
+        const groupId = document.getElementById('modalGroupId').value;
+        const studentId = document.getElementById('modalStudentSelect').value;
+        if (!studentId || !groupId) return alert("O'quvchini tanlang!");
+        
+        try {
+            const res = await fetch(`http://localhost:3000/api/groups/${groupId}/students`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${localStorage.getItem('adminToken')}` },
+                body: JSON.stringify({ student_id: studentId })
+            });
+            const data = await res.json();
+            if (data.success) {
+                alert("O'quvchi guruhga muvaffaqiyatli biriktirildi!");
+                closeStudentGroupModal();
+            } else {
+                alert(data.message || "Xatolik yuz berdi");
+            }
+        } catch (err) { console.error(err); }
+    }
+
+</script>
+
+<!-- Dynamic Weather 3D Background Scripts -->
+<script src="https://cdn.jsdelivr.net/npm/tsparticles@2/tsparticles.bundle.min.js"></script>
+<script src="../JS/weather-bg.js"></script>
+
+</body>
+</html>
